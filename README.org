@@ -15,9 +15,10 @@ The main features kept fromt the original are
 - Minimalist design, just enough to enhance readability
 - Simple to change and extend (edit this file and export)
 
-View the [[https://deadb17.github.io/org-mode-css/][sample document]].
+View the [[https://benneti.github.io/org-mode-css/][sample documet]].
 
 Some alternatives:
+- [[https://github.com/DEADB17/org-mode-css][DEADB17/org-mode-css]]
 - [[https://github.com/fniessen/org-html-themes][fniessen/org-html-themes]]
 - [[https://github.com/gongzhitaao/orgcss][gongzhitaao/orgcss]]
 - [[https://github.com/thomasf/solarized-css][thomasf/solarized-css]]
@@ -44,6 +45,10 @@ Some alternatives:
      ,#+SELECT_TAGS: export
      ,#+EXCLUDE_TAGS: noexport
      ,#+CREATOR: Emacs 26.1 (Org mode 9.1.14)
+   #+end_src
+   Note that the setup can also be put in a file and then included, e.g.:
+   #+begin_src org
+     ,#+SETUPFILE: ./setup.org
    #+end_src
 
 * Generate the =org.css= output file
