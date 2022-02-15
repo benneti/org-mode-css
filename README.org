@@ -72,8 +72,25 @@ The output file is generated from this document. To generate it evaluate (
 
 If you have [[https://nodejs.org/][Node.js]] and [[https://www.npmjs.com/][npm]] installed evaluate this source block to [[https://www.npmjs.com/package/uglifycss][minify]] the
 file.
-#+begin_src sh :file docs/org.css
+#+begin_src sh :results file :file docs/org.css
   npx uglifycss $sanitize $typography $forms $org $colors
+#+end_src
+
+#+RESULTS:
+[[file:docs/org.css]]
+
+Or if you have [[https://github.com/sprymix/csscompressor][csscompressor]] installed evaluate this source block to [[https://www.npmjs.com/package/uglifycss][minify]] the
+file.
+#+begin_src sh :results file :file docs/org.css
+  python -m csscompressor $sanitize $typography $forms $org $colors
+#+end_src
+
+#+RESULTS:
+[[file:docs/org.css]]
+
+On nixos run
+#+begin_src sh :results file :file docs/org.css
+  nix-shell -p "python3.withPackages (p: [ p.csscompressor ])" --run "python -m csscompressor $sanitize $typography $forms $org $colors"
 #+end_src
 
 #+RESULTS:
@@ -159,6 +176,16 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
   figure {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* make the table scrollable vertically on small screens */
+  table {
+    display: block;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    margin: 0 auto;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
   figure {
