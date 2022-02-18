@@ -1,7 +1,4 @@
 /README.html
 /index.html
-/forms.css
-/org-styles.css
-/sanitize.css
-/typography.css
-/colors.css
+/*.css
+!/docs/*.css
