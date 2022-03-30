@@ -312,10 +312,16 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
   @media (min-width: 62rem) {
     body > * {
       margin-left: auto;
-      margin-right: auto;
+      margin-left: auto;
     }
   }
 
+  #org-div-home-and-up{
+      position: fixed;
+      margin-left: auto;
+      top: 0.25rem;
+      padding: 2px 5px 2px 5px;
+  }
 #+end_src
 
 #+RESULTS: org-styles
@@ -415,6 +421,9 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
     .priority {color: #f1fa8c;}
     .todo {color: #ffb86c;}
     .done { color: #50fa7b;}
+    #org-div-home-and-up{
+      background-color: #282a36;
+    }
   }
   @media (prefers-color-scheme: light) {
     /* body { */
@@ -435,6 +444,10 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
     .priority {color: #6c7908;}
     .todo {color: #7d4800;}
     .done { color: #008504;}
+
+    #org-div-home-and-up{
+      background-color: white;
+    }
   }
 #+end_src
 
