@@ -8,6 +8,7 @@
 #+HTML_CONTAINER: section
 #+HTML_DOCTYPE: html5
 #+HTML_HEAD: <link rel="stylesheet" href="org.css">
+#+HTML_HEAD: <link rel="stylesheet" href="org-toc.css">
 #+EXPORT_FILE_NAME: docs/index
 #+LANGUAGE: en
 #+SELECT_TAGS: export

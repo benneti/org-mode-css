@@ -59,28 +59,30 @@ Some alternatives:
 :header-args:sh+: :var typography=typography
 :header-args:sh+: :var org=org-styles
 :header-args:sh+: :var orgtoc=org-styles-toc
-:header-args:sh+: :var orgnotoc=org-styles-notoc
 :header-args:sh+: :var colors=colors
 :END:
 The output file is generated from this document. To generate it evaluate (
 @@html:<kbd>@@C-c C-c@@html:</kbd>@@ ) this source block.
 
 #+begin_src sh :results file :file docs/org.css
-  cat $sanitize $typography $forms $org $orgtoc $colors
+  cat $sanitize $typography $forms $org $colors
 #+end_src
 
 #+RESULTS:
 [[file:docs/org.css]]
 
-or without the fixed space for the toc
+the css for the responsive toc
 #+begin_src sh :results file :file docs/org-notoc.css
-  cat $sanitize $typography $forms $org $orgnotoc $colors
+  cat  $orgtoc
 #+end_src
+
+#+RESULTS:
+[[file:docs/org-notoc.css]]
 
 If you have [[https://nodejs.org/][Node.js]] and [[https://www.npmjs.com/][npm]] installed evaluate this source block to [[https://www.npmjs.com/package/uglifycss][minify]] the
 file.
 #+begin_src sh :results file :file docs/org.css
-  npx uglifycss $sanitize $typography $forms $org $orgtoc $colors
+  npx uglifycss $sanitize $typography $forms $org $colors
 #+end_src
 
 #+RESULTS:
@@ -89,7 +91,7 @@ file.
 Or if you have [[https://github.com/sprymix/csscompressor][csscompressor]] installed evaluate this source block to [[https://www.npmjs.com/package/uglifycss][minify]] the
 file.
 #+begin_src sh :results file :file docs/org.css
-  python -m csscompressor $sanitize $typography $forms $org $orgtoc $colors
+  python -m csscompressor $sanitize $typography $forms $org $colors
 #+end_src
 
 #+RESULTS:
@@ -97,18 +99,18 @@ file.
 
 On nixos run
 #+begin_src sh :results file :file docs/org.css
-  nix-shell -p "python3.withPackages (p: [ p.csscompressor ])" --run "python -m csscompressor $sanitize $typography $forms $org $orgtoc $colors"
+  nix-shell -p "python3.withPackages (p: [ p.csscompressor ])" --run "python -m csscompressor $sanitize $typography $forms $org $colors"
 #+end_src
 
 #+RESULTS:
 [[file:docs/org.css]]
 
-#+begin_src sh :results file :file docs/org-notoc.css
-  nix-shell -p "python3.withPackages (p: [ p.csscompressor ])" --run "python -m csscompressor $sanitize $typography $forms $org $orgnotoc $colors"
+#+begin_src sh :results file :file docs/org-toc.css
+  nix-shell -p "python3.withPackages (p: [ p.csscompressor ])" --run "python -m csscompressor $orgtoc"
 #+end_src
 
 #+RESULTS:
-[[file:docs/org-notoc.css]]
+[[file:docs/org-toc.css]]
 
 * =org.css= contents
 The customized options are in the /Org/ and /Colors/ sections below. The other
@@ -158,13 +160,22 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
   body {
     --max-width: 84rem;
     --text-width: 60rem;
-    --toc-width: 24rem;
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   body > * {
     max-width: var(--text-width);
     margin-left: auto;
     margin-right: auto;
+  }
+
+  @media (max-width: 60rem) {
+    body > * {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
   }
 
   ul,
@@ -311,9 +322,14 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
 
   #org-div-home-and-up{
       position: fixed;
-      margin-left: auto;
       top: 0.25rem;
+      left: calc((100% - var(--text-width)) / 2);
       padding: 2px 5px 2px 5px;
+  }
+  @media (max-width: 60rem) {
+      #org-div-home-and-up{
+          left: 1rem;
+      }
   }
 #+end_src
 
@@ -324,23 +340,19 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
 
 #+name: org-styles-toc
 #+begin_src css :results file :file org-styles-toc.css
+body {
+    --toc-width: 24rem;
+}
+
 #table-of-contents .timestamp-wrapper {
     font-size: 80%;
 }
-  /* #table-of-contents ul { */
-  /*   padding-left: 1em; */
-  /* } */
+
 #table-of-contents {
     white-space: normal;
     overflow: auto;
 }
 @media (min-width: 86rem) {
-    body {
-        max-width: var(--max-width);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
     body > * {
         left: calc( (100% - var(--text-width) + var(--toc-width)) / 2 );
         margin-right: 1rem;
@@ -355,6 +367,10 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
         overflow-y: auto;
     }
 
+    #org-div-home-and-up{
+        left: calc( (100% - var(--text-width) - var(--toc-width)) / 2 );
+    }
+
     #table-of-contents > h2 {
         font-size: 1.563em;
     }
@@ -364,47 +380,22 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
         margin-left: auto;
         margin-right: auto;
     }
+
     #table-of-contents {
         position: fixed;
         top: 5rem;
         left: calc((100% - var(--text-width))/2 - var(--toc-width));;
         overflow-y: auto;
     }
+
+    #org-div-home-and-up{
+        left: calc((100% - var(--text-width))/2 - var(--toc-width));;
+    }
 }
 #+end_src
 
 #+RESULTS: org-styles-toc
 [[file:org-styles-toc.css]]
-
-
-*** responsive no-toc
-
-#+name: org-styles-notoc
-#+begin_src css :results file :file org-styles-notoc.css
-  @media (min-width: 84rem) {
-    body {
-      --max-width: 84rem;
-      max-width: var(--max-width);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    body > * {
-      margin-left: 1rem;
-      margin-right: 1rem;
-      max-width: calc(var(--max-width) - 2rem);
-      top: 1rem;
-    }
-
-    #table-of-contents > h2 {
-      font-size: 1.563em;
-    }
-  }
-
-#+end_src
-
-#+RESULTS: org-styles-notoc
-[[file:org-styles-notoc.css]]
 
 
 ** Colors
