@@ -167,5 +167,7 @@ And a really wide picture.
 \int_D (\nabla\cdot \mathcal{F})\,dV &=\int_{\partial D}\mathcal{F}\cdot n\, dS
 \end{align}
 
+* An unbelievably long heading just to show overflowing text
+
 * Footnotes
 [fn:lorem_ipsum] https://en.wikipedia.org/wiki/Lorem_ipsum
