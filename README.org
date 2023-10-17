@@ -230,6 +230,8 @@ sections are from the [[https://csstools.github.io/sanitize.css/][sanitize.css]]
 
   .title { text-align: center; }
 
+  .subtitle { text-align: center; }
+
   .ABSTRACT {
     border-top: 0.125em solid;
     border-bottom: 0.125em solid;
